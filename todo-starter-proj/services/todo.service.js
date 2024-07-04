@@ -25,6 +25,14 @@ function query(filterBy = {}) {
                 todos = todos.filter(todo => regExp.test(todo.txt))
             }
 
+            if (filterBy.status) {
+                if (filterBy.status === 'active') {
+                    todos = todos.filter(todo => !todo.isDone)
+                } else if (filterBy.status === 'done') {
+                    todos = todos.filter(todo => todo.isDone)
+                }
+            }
+
             if (filterBy.importance) {
                 todos = todos.filter(todo => todo.importance >= filterBy.importance)
             }

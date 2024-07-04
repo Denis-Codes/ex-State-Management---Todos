@@ -10,7 +10,6 @@ import { loadTodos, removeTodo, saveTodo } from '../../store/actions/todo.action
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 
 export function TodoIndex() {
-    // const [todos, setTodos] = useState(null)
     const todos = useSelector(storeState => storeState.todos)
     const isLoading = useSelector(storeState => storeState.isLoading)
     const dispatch = useDispatch()
@@ -42,9 +41,8 @@ export function TodoIndex() {
 
     function onToggleTodo(todo) {
         const todoToSave = { ...todo, isDone: !todo.isDone }
-        todoService.save(todoToSave)
+        saveTodo(todoToSave)
             .then((savedTodo) => {
-                setTodos(prevTodos => prevTodos.map(currTodo => (currTodo._id !== todo._id) ? currTodo : { ...savedTodo }))
                 showSuccessMsg(`Todo is ${(savedTodo.isDone) ? 'done' : 'back on your list'}`)
             })
             .catch(err => {
@@ -53,7 +51,6 @@ export function TodoIndex() {
             })
     }
 
-    // if (!todos) return <div>Loading...</div>
     return (
         <section className="todo-index">
             <TodoFilter filterBy={filterBy} onSetFilterBy={setFilterBy} />
